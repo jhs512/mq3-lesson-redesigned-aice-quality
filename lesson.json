@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "id": "lsn_3230e6c8-44ba-4cb2-8d23-7dcbb54ea519",
-  "revision": "aice-quality-7-spacing-20261103",
+  "revision": "aice-quality-7-spacing-20261103-todo-20261103",
   "title": "비거나 중복된 배송 자료를 살펴봐요",
   "description": "같은 배송 파일에서 빈 값·수정본·늦은 기록의 뜻을 구별해요.",
   "objectives": [
@@ -786,7 +786,7 @@
     {
       "id": "stp_22d818f2-2766-4a3f-9726-774c95a440b1",
       "title": "처리 순서와 범위를 연결해요",
-      "goal": "시간이 있는 배송 중 주문별 마지막 수정본을 남겨요.\n빈 메모는 허용해요. 두 처리 조건을 맞춰 보세요.\n\n**할 일**\n\n1. 코드 실행을 눌러 수정 전 결과를 확인하세요.\n2. 문제가 말한 한 곳을 고치세요.\n3. 다시 실행해 결과가 요구와 맞는지 비교하세요.\n4. 수정한 코드를 제출하세요.",
+      "goal": "시간이 있는 배송 중 주문별 마지막 수정본을 남겨요.\n빈 메모는 허용해요.\n\n**할 일**\n\n1. 코드 실행을 눌러 수정 전 결과를 확인하세요.\n2. `clean =` 줄에서 결측을 검사할 열과 남길 기록, 두 조건을 고치세요.\n3. 다시 실행해 결과가 요구와 맞는지 비교하세요.\n4. 수정한 코드를 제출하세요.",
       "language": "python",
       "starter_code": "# 표를 다룰 판다스를 불러와요.\nimport pandas as pd\n# None은 측정하지 못한 값이에요. 0은 실제 시간이에요.\ndata = {'order_id': [101, 102, 103, 103], 'minutes': [12, None, 30, 42], 'region': ['서울', '부산', '서울', '서울'], 'note': [None, 'ok', 'ok', 'ok']}\n# 같은 배송 파일을 표로 확인해요.\ndf = pd.DataFrame(data)\n# 시간 있는 배송에서 주문별 마지막 수정본을 남겨요.\nclean = df.dropna().drop_duplicates(subset=[\"order_id\"], keep=\"first\")\nprint(clean[\"order_id\"].tolist())\nprint(clean[\"minutes\"].tolist())\n",
       "solution": "# 표를 다룰 판다스를 불러와요.\nimport pandas as pd\n# None은 측정하지 못한 값이에요. 0은 실제 시간이에요.\ndata = {'order_id': [101, 102, 103, 103], 'minutes': [12, None, 30, 42], 'region': ['서울', '부산', '서울', '서울'], 'note': [None, 'ok', 'ok', 'ok']}\n# 같은 배송 파일을 표로 확인해요.\ndf = pd.DataFrame(data)\n# 시간 있는 배송에서 주문별 마지막 수정본을 남겨요.\nclean = df.dropna(subset=[\"minutes\"]).drop_duplicates(subset=[\"order_id\"], keep=\"last\")\nprint(clean[\"order_id\"].tolist())\nprint(clean[\"minutes\"].tolist())\n",
